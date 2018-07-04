@@ -15,7 +15,7 @@ function Card(parentId,id, name) {
 			self.removeCard();
 		});
 		$cardChangeBtn.click(function() {
-			self.changeCard("ZMIANA");
+			self.changeCard();
 		});
 		$card.append($cardDeleteBtn);
 		$card.append($cardChangeBtn);
@@ -35,8 +35,9 @@ Card.prototype = {
 			}
 		});
 	},
-	changeCard: function(newName) {
+	changeCard: function() {
 		var self = this;
+		var newName = prompt("Enter the name of the card");
 		$.ajax({
 			url: baseUrl + '/card/' + self.id,
 			method: 'PUT',
@@ -45,7 +46,7 @@ Card.prototype = {
 				bootcamp_kanban_column_id: self.parentId
 			},
 			success: function() {
-				console.log('card ok');
+				$(self.element[0]).find('p').html(newName);
 			}
 		});
 	}
